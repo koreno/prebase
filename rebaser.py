@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from subprocess import check_call, check_output
+SPACER = "_"
 
 
 def parse_log(first, last):
@@ -47,16 +48,16 @@ def write_todo(file, first, last, comments):
     width = min(120, max(len(c) for (c, _) in log) if log else 80)
     for commit, files in log:
         indices = {file_indices[f] for f in files}
-        placements = "".join(SYM[i % len(SYM)] if i in indices else "~" for i in range(max(indices)+1)) if indices else ""
+        placements = "".join(SYM[i % len(SYM)] if i in indices else SPACER for i in range(max(indices)+1)) if indices else ""
         lines.append((compact(commit, width).ljust(width), placements))
     lines.reverse()
-
+    placements_width = max(file_indices.values()) + 2
     for i, (commit, placements) in enumerate(lines, 1):
-        print("pick", commit.format(idx=i), placements, file=file)
+        print("pick", commit.format(idx=i), placements.ljust(placements_width, SPACER), file=file)
 
     print("", file=file)
     for f, i in sorted(file_indices.items(), key=lambda p: p[1]):
-        pos = SYM[i % len(SYM)].rjust(1+i, "~")
+        pos = SYM[i % len(SYM)].rjust(1+i, SPACER).ljust(placements_width, SPACER)
         f = "[%s] %s" % (SYM[i], f)
         fname = compact("# %s" % f, width+2).ljust(width+2)
         print(fname, pos, file=file)
