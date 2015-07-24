@@ -1,36 +1,36 @@
-pick d0d13d0    1:removed some bullshit from __entrypoint.d      ~~~~~~~~~9
-pick a44e878    2:Improvements to object.d and __entrypoint.d    ~~~~~~~~89
-pick 12c5b47    3:Add usage to build.d                           ~~~3
-pick 318af43    4:Added .gitignore                               ~~~~~~~~~~~~~~e
-pick eb9ad0f    5:Attempting to add more array support           ~1~3~56~89abcd
-pick 8b8df05    6:Added some special support for ldc to object.d ~~~~~~~~8
-pick e630300    7:Removed imports from build                     ~~~3
-pick 69ae673    8:c-main to d-main                               ~~2345~7~9
-pick c00b344    9:Implemented write an exit system calls         ~1~345678
-pick 3901cca   10:Add wscript_build file                         0~~3
-pick 349bec4   11:WAF: fix build script                          0
-pick 70e1d26   12:Make main module qualified                     ~~2
-pick f22cca0   13:Update to 2.067                                ~1
-pick 06cb727   14:revert to compiling under 2.066                01
-pick 25c13c4   15:WAF: remove unneeded post()s                   0
+pick d0d13d0    1:removed some bullshit from __entrypoint.d      _________9______
+pick a44e878    2:Improvements to object.d and __entrypoint.d    ________89______
+pick 12c5b47    3:Add usage to build.d                           ___3____________
+pick 318af43    4:Added .gitignore                               ______________e_
+pick eb9ad0f    5:Attempting to add more array support           _1_3_56_89abcd__
+pick 8b8df05    6:Added some special support for ldc to object.d ________8_______
+pick e630300    7:Removed imports from build                     ___3____________
+pick 69ae673    8:c-main to d-main                               __2345_7_9______
+pick c00b344    9:Implemented write an exit system calls         _1_345678_______
+pick 3901cca   10:Add wscript_build file                         0__3____________
+pick 349bec4   11:WAF: fix build script                          0_______________
+pick 70e1d26   12:Make main module qualified                     __2_____________
+pick f22cca0   13:Update to 2.067                                _1______________
+pick 06cb727   14:revert to compiling under 2.066                01______________
+pick 25c13c4   15:WAF: remove unneeded post()s                   0_______________
 
-# [0] wscript_build                                              0
-# [1] ports/posix.d                                              ~1
-# [2] app/main.d                                                 ~~2
-# [3] build.d                                                    ~~~3
-# [4] include/__entrypoint.di                                    ~~~~4
-# [5] ports/linux.d                                              ~~~~~5
-# [6] source/array.d                                             ~~~~~~6
-# [7] source/dmain.d                                             ~~~~~~~7
-# [8] source/object.d                                            ~~~~~~~~8
-# [9] source/__entrypoint.d                                      ~~~~~~~~~9
-# [a] ports/windows.d                                            ~~~~~~~~~~a
-# [b] source/ports/linux.d                                       ~~~~~~~~~~~b
-# [c] source/ports/posix.d                                       ~~~~~~~~~~~~c
-# [d] source/ports/windows.d                                     ~~~~~~~~~~~~~d
-# [e] .gitignore                                                 ~~~~~~~~~~~~~~e
+# [0] wscript_build                                              0_______________
+# [1] ports/posix.d                                              _1______________
+# [2] app/main.d                                                 __2_____________
+# [3] build.d                                                    ___3____________
+# [4] include/__entrypoint.di                                    ____4___________
+# [5] ports/linux.d                                              _____5__________
+# [6] source/array.d                                             ______6_________
+# [7] source/dmain.d                                             _______7________
+# [8] source/object.d                                            ________8_______
+# [9] source/__entrypoint.d                                      _________9______
+# [a] ports/windows.d                                            __________a_____
+# [b] source/ports/linux.d                                       ___________b____
+# [c] source/ports/posix.d                                       ____________c___
+# [d] source/ports/windows.d                                     _____________d__
+# [e] .gitignore                                                 ______________e_
 
-# Rebase eb9ad0f..25c13c4 onto eb9ad0f
+# Rebase 9c75315..25c13c4 onto 9c75315
 #
 # Commands:
 #  p, pick = use commit
