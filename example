@@ -1,0 +1,39 @@
+pick 8b8df05    1:Added some special support for ldc to object.d ~~~~~~~~8
+pick e630300    2:Removed imports from build                     ~~~3
+pick 69ae673    3:c-main to d-main                               ~~2345~7~9
+pick c00b344    4:Implemented write an exit system calls         ~1~345678
+pick 3901cca    5:Add wscript_build file                         0~~3
+pick 349bec4    6:WAF: fix build script                          0
+pick 70e1d26    7:Make main module qualified                     ~~2
+pick f22cca0    8:Update to 2.067                                ~1
+pick 06cb727    9:revert to compiling under 2.066                01
+pick 25c13c4   10:WAF: remove unneeded post()s                   0
+
+# [0] wscript_build                                              0
+# [1] ports/posix.d                                              ~1
+# [2] app/main.d                                                 ~~2
+# [3] build.d                                                    ~~~3
+# [4] include/__entrypoint.di                                    ~~~~4
+# [5] ports/linux.d                                              ~~~~~5
+# [6] source/array.d                                             ~~~~~~6
+# [7] source/dmain.d                                             ~~~~~~~7
+# [8] source/object.d                                            ~~~~~~~~8
+# [9] source/__entrypoint.d                                      ~~~~~~~~~9
+
+# Rebase eb9ad0f..25c13c4 onto eb9ad0f
+#
+# Commands:
+#  p, pick = use commit
+#  r, reword = use commit, but edit the commit message
+#  e, edit = use commit, but stop for amending
+#  s, squash = use commit, but meld into previous commit
+#  f, fixup = like "squash", but discard this commit's log message
+#  x, exec = run command (the rest of the line) using shell
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
