@@ -70,9 +70,14 @@ if __name__ == '__main__':
     import sys
     import os
 
+    if len(sys.argv) <= 1:
+        print("\n\t%s <branch>\n" % sys.argv[0])
+        sys.exit(1)
+
     if not os.path.isfile(sys.argv[1]):
         base_commit = sys.argv[1]
-        os.environ['GIT_ORIG_EDITOR'] = check_output(["git", "var", "GIT_EDITOR"], universal_newlines=True).strip()
+        git_editor = check_output(["git", "var", "GIT_EDITOR"], universal_newlines=True).strip()
+        os.environ['GIT_ORIG_EDITOR'] = os.path.expanduser(git_editor)
         os.environ['GIT_EDITOR'] = __file__
         os.execlpe("git", "git", "rebase", "-i", base_commit, os.environ)
 
@@ -96,4 +101,3 @@ if __name__ == '__main__':
         write_todo(file, first, last, comments)
 
     check_call([editor, todo_file])
-    # subl['-n', '-w', todo_file] & FG
