@@ -24,11 +24,11 @@ pick 25c13c4   15:WAF: remove unneeded post()s                   0
 # [7] source/dmain.d                                             ~~~~~~~7
 # [8] source/object.d                                            ~~~~~~~~8
 # [9] source/__entrypoint.d                                      ~~~~~~~~~9
-# [10] ports/windows.d                                           ~~~~~~~~~~a
-# [11] source/ports/linux.d                                      ~~~~~~~~~~~b
-# [12] source/ports/posix.d                                      ~~~~~~~~~~~~c
-# [13] source/ports/windows.d                                    ~~~~~~~~~~~~~d
-# [14] .gitignore                                                ~~~~~~~~~~~~~~e
+# [a] ports/windows.d                                            ~~~~~~~~~~a
+# [b] source/ports/linux.d                                       ~~~~~~~~~~~b
+# [c] source/ports/posix.d                                       ~~~~~~~~~~~~c
+# [d] source/ports/windows.d                                     ~~~~~~~~~~~~~d
+# [e] .gitignore                                                 ~~~~~~~~~~~~~~e
 
 # Rebase eb9ad0f..25c13c4 onto eb9ad0f
 #

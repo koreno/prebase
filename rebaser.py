@@ -43,19 +43,22 @@ def write_todo(file, first, last, comments):
     file_indices = defaultdict(lambda: next(c))
     SYM = dict(enumerate(chain(digits, ascii_letters)))
     lines = []
-    for commit, files in parse_log(first, last):
+    log = list(parse_log(first, last))
+    width = min(120, max(len(c) for (c, _) in log) if log else 80)
+    for commit, files in log:
         indices = {file_indices[f] for f in files}
-        placements = "".join(SYM[i % len(SYM)] if i in indices else "~" for i in range(max(indices)+1))
-        lines.append((compact(commit, 80).ljust(80), placements))
+        placements = "".join(SYM[i % len(SYM)] if i in indices else "~" for i in range(max(indices)+1)) if indices else ""
+        lines.append((compact(commit, width).ljust(width), placements))
     lines.reverse()
 
     for i, (commit, placements) in enumerate(lines, 1):
         print("pick", commit.format(idx=i), placements, file=file)
 
     print("", file=file)
-    for f, i in sorted(file_indices.items(), key=lambda p: -p[1]):
+    for f, i in sorted(file_indices.items(), key=lambda p: p[1]):
         pos = SYM[i % len(SYM)].rjust(1+i, "~")
-        fname = compact("# %s" % f, 82).ljust(82)
+        f = "[%s] %s" % (SYM[i], f)
+        fname = compact("# %s" % f, width+2).ljust(width+2)
         print(fname, pos, file=file)
 
     print("", file=file)
