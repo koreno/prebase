@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
+
+"'rebaser' improves on 'git rebase -i' by adding information per commit regarding which files it touched."
+
 from subprocess import check_call, check_output
+from itertools import count, chain
+from collections import defaultdict
+from string import digits, ascii_letters
+
+SYMBOLS = dict(enumerate(chain(digits, ascii_letters)))
 SPACER = "_"
 
 
@@ -36,19 +44,19 @@ def compact(line, length, ellipsis="....", suffix_length=10):
     return line[:length-len(ellipsis)-suffix_length] + ellipsis + line[-suffix_length:]
 
 
+def symbol(idx):
+    return SYMBOLS[idx % len(SYMBOLS)]
+
+
 def write_todo(file, first, last, comments):
-    from itertools import count, chain
-    from collections import defaultdict
-    from string import digits, ascii_letters
     c = count(0)
     file_indices = defaultdict(lambda: next(c))
-    SYM = dict(enumerate(chain(digits, ascii_letters)))
     lines = []
     log = list(parse_log(first, last))
     width = min(120, max(len(c) for (c, _) in log) if log else 80)
     for commit, files in log:
         indices = {file_indices[f] for f in files}
-        placements = "".join(SYM[i % len(SYM)] if i in indices else SPACER for i in range(max(indices)+1)) if indices else ""
+        placements = "".join(symbol(i) if i in indices else SPACER for i in range(max(indices)+1)) if indices else ""
         lines.append((compact(commit, width).ljust(width), placements))
     lines.reverse()
     placements_width = max(file_indices.values()) + 2
@@ -57,8 +65,8 @@ def write_todo(file, first, last, comments):
 
     print("", file=file)
     for f, i in sorted(file_indices.items(), key=lambda p: p[1]):
-        pos = SYM[i % len(SYM)].rjust(1+i, SPACER).ljust(placements_width, SPACER)
-        f = "[%s] %s" % (SYM[i], f)
+        pos = symbol(i).rjust(1+i, SPACER).ljust(placements_width, SPACER)
+        f = "[%s] %s" % (symbol(i), f)
         fname = compact("# %s" % f, width+2).ljust(width+2)
         print(fname, pos, file=file)
 
