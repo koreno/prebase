@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"'rebaser' improves on 'git rebase -i' by adding information per commit regarding which files it touched."
+"Improve on 'git rebase -i' by adding information per commit regarding which files it touched."
 
 from subprocess import check_call, check_output
 from itertools import count, chain

@@ -1,3 +1,24 @@
+# Prebase
+
+*git-prebase* improves on 'git rebase -i' by adding information per commit regarding which files it touched.
+- Each file gets an alpha-numeric identifier at a particular column, a list of which appears below the commit list. (The identifiers wrap around after the 62nd file)
+- Commits can be moved up and down safely (without conflicts) as long as their columns don't clash (they did not touch the same file).
+
+
+# Installation
+
+Add the executable to your path and git will automatically expose it as
+
+    git prebase <commit-ref>
+
+The flow is exactly like an interactive rebase, only that the 'todo' list will now contain the additional information.
+
+
+# Example
+
+Below is an example of the 'todo' list created by git-prebase.
+
+```
 pick d0d13d0    1:removed some bullshit from __entrypoint.d      _________9______
 pick a44e878    2:Improvements to object.d and __entrypoint.d    ________89______
 pick 12c5b47    3:Add usage to build.d                           ___3____________
@@ -47,3 +68,4 @@ pick 25c13c4   15:WAF: remove unneeded post()s                   0______________
 # However, if you remove everything, the rebase will be aborted.
 #
 # Note that empty commits are commented out
+```
