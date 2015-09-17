@@ -2,6 +2,8 @@
 
 "Improve on 'git rebase -i' by adding information per commit regarding which files it touched."
 
+import sys
+import os
 from subprocess import check_call, check_output
 from itertools import count, chain
 from collections import defaultdict
@@ -74,15 +76,20 @@ def write_todo(file, first, last, comments):
     print(comments, file=file)
 
 
+def usage():
+    print("Usage:\n\t%s <branch/commit-ref>\n" % sys.argv[0])
+    sys.exit(1)
+
+
 if __name__ == '__main__':
-    import sys
-    import os
 
     if len(sys.argv) <= 1:
-        print("\n\t%s <branch>\n" % sys.argv[0])
-        sys.exit(1)
+        usage()
 
     if not os.path.isfile(sys.argv[1]):
+        if sys.argv[1].startswith("-"):
+            usage()
+
         base_commit = sys.argv[1]
         git_editor = check_output(["git", "var", "GIT_EDITOR"], universal_newlines=True).strip()
         os.environ['GIT_ORIG_EDITOR'] = os.path.expanduser(git_editor)
