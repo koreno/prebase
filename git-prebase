@@ -50,7 +50,7 @@ def symbol(idx):
     return SYMBOLS[idx % len(SYMBOLS)]
 
 
-def write_todo(file, first, last, comments):
+def write_todo(file, first, last, comments, sort_file_list=False):
     c = count(0)
     file_indices = defaultdict(lambda: next(c))
     lines = []
@@ -66,7 +66,9 @@ def write_todo(file, first, last, comments):
         print("pick", commit.format(idx=i), placements.ljust(placements_width, SPACER), file=file)
 
     print("", file=file)
-    for f, i in sorted(file_indices.items(), key=lambda p: p[1]):
+
+    sortby = 0 if sort_file_list else 1
+    for f, i in sorted(file_indices.items(), key=lambda p: p[sortby]):
         pos = symbol(i).rjust(1+i, SPACER).ljust(placements_width, SPACER)
         f = "[%s] %s" % (symbol(i), f)
         fname = compact("# %s" % f, width+2).ljust(width+2)
@@ -77,7 +79,10 @@ def write_todo(file, first, last, comments):
 
 
 def usage():
-    print("Usage:\n\t%s <branch/commit-ref>\n" % sys.argv[0])
+    print("usage: %s [options] <branch>\n\n"
+          "Options:\n"
+          "     -F, --sort-file-list        Show file list sorted by file name, instead of order of appearance\n"
+          % sys.argv[0])
     sys.exit(1)
 
 
@@ -86,11 +91,23 @@ if __name__ == '__main__':
     if len(sys.argv) <= 1:
         usage()
 
-    if not os.path.isfile(sys.argv[1]):
-        if sys.argv[1].startswith("-"):
+    if 'GIT_ORIG_EDITOR' not in os.environ:
+        base_commit = None
+
+        for arg in sys.argv[1:]:
+            if arg.startswith("-"):
+                if arg in ("-F", "--sort-file-list"):
+                    os.environ['GIT_PREBASE_SORT_FILE_LIST'] = "1"
+                else:
+                    usage()
+            elif base_commit:
+                usage()
+            else:
+                base_commit = arg
+
+        if not base_commit:
             usage()
 
-        base_commit = sys.argv[1]
         git_editor = check_output(["git", "var", "GIT_EDITOR"], universal_newlines=True).strip()
         os.environ['GIT_ORIG_EDITOR'] = os.path.expanduser(git_editor)
         os.environ['GIT_EDITOR'] = __file__
@@ -98,6 +115,7 @@ if __name__ == '__main__':
 
     todo_file = sys.argv[1]
     os.environ['GIT_EDITOR'] = editor = os.environ['GIT_ORIG_EDITOR']
+    sort_file_list = bool(int(os.getenv("GIT_PREBASE_SORT_FILE_LIST", 0)))
 
     if not todo_file.endswith("git-rebase-todo"):
         os.execlpe(editor, editor, todo_file, os.environ)
@@ -113,6 +131,6 @@ if __name__ == '__main__':
 
     first, *_, last = commits
     with open(todo_file, "w") as file:
-        write_todo(file, first, last, comments)
+        write_todo(file, first, last, comments, sort_file_list=sort_file_list)
 
     check_call([editor, todo_file])
