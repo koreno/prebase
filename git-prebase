@@ -1,6 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 "Improve on 'git rebase -i' by adding information per commit regarding which files it touched."
+
+from __future__ import print_function
 
 import sys
 import os
@@ -122,14 +124,17 @@ if __name__ == '__main__':
 
     commits = []
 
+    lines = []
     with open(todo_file) as f:
-        for line in f:
-            if not line.strip():
-                break
-            commits.append(line.split()[1])
-        comments = f.read()
+        lines = f.readlines()
 
-    first, *_, last = commits
+    for line in lines:
+        if not line.strip():
+            break
+        commits.append(line.split()[1])
+    comments = ''.join(lines)
+
+    first, last = commits[0], commits[-1]
     with open(todo_file, "w") as file:
         write_todo(file, first, last, comments, sort_file_list=sort_file_list)
 
