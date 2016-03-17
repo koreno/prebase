@@ -84,7 +84,7 @@ def usage():
     print("usage: %s [options] <branch>\n\n"
           "Options:\n"
           "     -F, --sort-file-list        Show file list sorted by file name, instead of order of appearance\n"
-          % sys.argv[0])
+          % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
 
