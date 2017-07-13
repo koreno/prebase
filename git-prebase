@@ -128,11 +128,11 @@ if __name__ == '__main__':
     with open(todo_file) as f:
         lines = f.readlines()
 
-    for line in lines:
+    for index, line in enumerate(lines):
         if not line.strip():
             break
         commits.append(line.split()[1])
-    comments = ''.join(lines)
+    comments = ''.join(lines[index + 1:])
 
     first, last = commits[0], commits[-1]
     with open(todo_file, "w") as file:
