@@ -77,7 +77,8 @@ def write_todo(file, first, last, comments, sort_file_list=False):
         print(fname, pos, file=file)
 
     print("", file=file)
-    print(comments, file=file)
+    for line in comments:
+        print(line, file=file, end="")
 
 
 def usage():
@@ -124,19 +125,19 @@ if __name__ == '__main__':
 
     commits = []
 
-    lines = []
     with open(todo_file) as f:
-        lines = f.readlines()
+        for line in f:
+            if line.strip() == "noop":
+                break
+            if not line.strip():
+                comments = list(f)
+                break
+            commits.append(line.split()[1])
 
-    for index, line in enumerate(lines):
-        if not line.strip():
-            break
-        commits.append(line.split()[1])
-    comments = ''.join(lines[index + 1:])
-
-    first, last = commits[0], commits[-1]
-    with open(todo_file, "w") as file:
-        write_todo(file, first, last, comments, sort_file_list=sort_file_list)
+    if commits:
+        first, last = commits[0], commits[1]
+        with open(todo_file, "w") as file:
+            write_todo(file, first, last, comments, sort_file_list=sort_file_list)
 
     sh = os.getenv("SHELL")
     assert sh, "Is this windows?... it'd be nice if someone can make this work :)"
