@@ -138,4 +138,6 @@ if __name__ == '__main__':
     with open(todo_file, "w") as file:
         write_todo(file, first, last, comments, sort_file_list=sort_file_list)
 
-    check_call([editor, todo_file])
+    sh = os.getenv("SHELL")
+    assert sh, "Is this windows?... it'd be nice if someone can make this work :)"
+    check_call([sh, "-c", "%s %s" % (editor, todo_file)])
