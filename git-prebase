@@ -135,7 +135,7 @@ if __name__ == '__main__':
             commits.append(line.split()[1])
 
     if commits:
-        first, last = commits[0], commits[1]
+        first, last = commits[0], commits[-1]
         with open(todo_file, "w") as file:
             write_todo(file, first, last, comments, sort_file_list=sort_file_list)
 
