@@ -111,9 +111,13 @@ if __name__ == '__main__':
         if not base_commit:
             usage()
 
-        git_editor = check_output(["git", "var", "GIT_EDITOR"], universal_newlines=True).strip()
+        git_editor = (
+            os.environ.get("GIT_SEQUENCE_EDITOR")
+            or check_output(["git", "config", "--get", "sequence.editor"], universal_newlines=True).strip()
+            or check_output(["git", "var", "GIT_EDITOR"], universal_newlines=True).strip())
+
         os.environ['GIT_ORIG_EDITOR'] = os.path.expanduser(git_editor)
-        os.environ['GIT_EDITOR'] = __file__
+        os.environ['GIT_SEQUENCE_EDITOR'] = __file__
         os.execlpe("git", "git", "rebase", "-i", base_commit, os.environ)
 
     todo_file = sys.argv[1]
